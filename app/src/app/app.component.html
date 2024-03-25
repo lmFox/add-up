@@ -1,18 +1,1 @@
-<main aria-live="polite">
-    @if (!showEndScreen) {
-        <p>{{ current?.toString() }}</p>
-        <hr/>
-        <p>{{ showAnswer ? current?.answer() : '???' }}</p>
-
-        <div class="progress-bar">
-            <label>
-                {{ progress }}
-                <progress [value]="index" [max]="exercises.length"></progress>
-            </label>
-            <button (click)="next()">Next</button>
-        </div>
-    }
-    @else {
-        <h4>Yay you have finished this exercise!</h4>
-    }
-</main>
+<app-view></app-view>
