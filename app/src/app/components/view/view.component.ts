@@ -11,10 +11,13 @@ import { Difficulty, Exercise } from '../../services/exercise';
 })
 export class ViewComponent {
     readonly exercises: Exercise[];
-
+    
     index: number;
-    current?: Exercise;
     showAnswer = false;
+
+    get current(): Exercise | undefined {
+        return this.exercises.at(this.index);
+    }
     
     get showEndScreen(): boolean {
         return !this.current;
@@ -27,7 +30,6 @@ export class ViewComponent {
     constructor(private readonly exerciseService: ExerciseService) {
         this.index = 0;
         this.exercises = this.exerciseService.generate(Difficulty.One);
-        this.current = this.exercises.at(this.index);
     }
 
     next() {
@@ -45,6 +47,5 @@ export class ViewComponent {
 
     private proceedNextExercise() {
         this.index += 1;
-        this.current = this.exercises.at(this.index);
     }
 }
