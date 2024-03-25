@@ -2,8 +2,8 @@
     @if (!showEndScreen) {
         <p>{{ current?.toString() }}</p>
         <hr/>
-        <p>{{ showAnswer ? current?.answer() : '???' }}</p>
-
+        <p class="answer" [class.show]="showAnswer">{{ current?.answer() }}</p>
+        
         <div class="progress-bar">
             <label>
                 {{ progress }}
