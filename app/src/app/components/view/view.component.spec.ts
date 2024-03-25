@@ -17,7 +17,22 @@ describe('ViewComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+    it('should generate exercises', () => {
+        expect(component.exercises.length).toBeGreaterThan(0);
+    });
+
+    it('should progress through the exercises', () => {
+        component.exercises.forEach(exercise => {
+            expect(component.current).toEqual(exercise);
+            expect(component.showAnswer).toBeFalse();
+            component.next();
+
+            expect(component.current).toEqual(exercise);
+            expect(component.showAnswer).toBeTrue();
+            component.next();
+        });
+
+        expect(component.current).toBeUndefined();
+        expect(component.showEndScreen).toBeTrue();
     });
 });
