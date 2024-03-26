@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ExerciseService } from '../../services/exercise.service';
-import { Difficulty, Exercise } from '../../services/exercise';
+import { Exercise } from '../../services/exercise';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
