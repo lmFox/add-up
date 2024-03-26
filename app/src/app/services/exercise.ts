@@ -9,7 +9,8 @@ export enum Difficulty {
     One = 1,
     Two,
     Three,
-    Four
+    Four,
+    Max = Four
 }
   
 export class Exercise {
