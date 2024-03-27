@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Exercise, Difficulty } from './../domain/exercise';
+import { Exercise } from './../domain/exercise';
+import { Difficulty } from '../domain/difficulty';
 
 @Injectable({
     providedIn: 'root'

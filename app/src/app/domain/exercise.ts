@@ -1,17 +1,6 @@
-enum Operation {
-    Addition = '+',
-    Subtraction = '-',
-    Multiplication = '*',
-    Division = '/'
-}
-
-export enum Difficulty {
-    One = 1,
-    Two,
-    Three,
-    Four,
-    Max = Four
-}
+import { RandomGenerator } from "./random-generator";
+import { Operation } from "./operation";
+import { Difficulty } from "./difficulty";
   
 export class Exercise {
     constructor(readonly op: Operation, readonly lhs: number, readonly rhs: number) { }
@@ -21,10 +10,10 @@ export class Exercise {
             operation = this.randomOperation();
         }
 
-        const rhs = this.randomNumber(difficulty);
+        const rhs = RandomGenerator.number(difficulty);
         const lhs = operation === Operation.Division 
-        ? this.randomNumber(difficulty) * rhs
-        : this.randomNumber(difficulty);
+        ? RandomGenerator.number(difficulty) * rhs
+        : RandomGenerator.number(difficulty);
 
         return new Exercise(operation, lhs, rhs);
     }
@@ -56,27 +45,5 @@ export class Exercise {
 
         const idx = Math.floor(Math.random() * operations.length);
         return operations[idx];
-    }
-
-    private static randomNumber(numberOfDigits: number): number {
-        if (numberOfDigits <= 0) {
-            throw new Error('Numbers should consist of at least one digit.');
-        }
-
-        let res = this.randomDigit('nonzero');
-
-        for (let i = 1; i < numberOfDigits; i++) {
-            res *= 10;
-            res += this.randomDigit();
-        }
-
-        return res;
-    }
-
-    private static randomDigit(mode?: 'nonzero') {
-        const lowerBound = mode === 'nonzero' ? 1 : 0;
-        const upperBound = 10;
-
-        return Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
     }
 }
