@@ -1,6 +1,7 @@
 import { RandomGenerator } from "./random-generator";
 import { Operation } from "./operation";
 import { Difficulty } from "./difficulty";
+import { Addition } from "./addition";
   
 export class Exercise {
     constructor(readonly op: Operation, readonly lhs: number, readonly rhs: number) { }
@@ -10,12 +11,16 @@ export class Exercise {
             operation = this.randomOperation();
         }
 
-        const rhs = RandomGenerator.number(difficulty);
-        const lhs = operation === Operation.Division 
-        ? RandomGenerator.number(difficulty) * rhs
-        : RandomGenerator.number(difficulty);
-
-        return new Exercise(operation, lhs, rhs);
+        if (operation === Operation.Addition) {
+            return Addition.generate(difficulty);
+        } else {
+            const rhs = RandomGenerator.number(difficulty);
+            const lhs = operation === Operation.Division 
+                ? RandomGenerator.number(difficulty) * rhs
+                : RandomGenerator.number(difficulty);
+        
+            return new Exercise(operation, lhs, rhs);   
+        }
     }
 
     answer(): number {
