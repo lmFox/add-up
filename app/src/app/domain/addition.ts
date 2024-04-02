@@ -3,26 +3,32 @@ import { Exercise } from "./exercise";
 import { Operation } from "./operation";
 import { RandomGenerator } from "./random-generator";
 
+interface IGenerateOptions {
+    lhsSize: number;
+    rhsSize: number; 
+};
+
 export class Addition {
+    private static readonly options = new Map<Difficulty, IGenerateOptions>([
+        [ Difficulty.One, { lhsSize: 1, rhsSize: 1 } ], // e.g. 1 + 1
+        [ Difficulty.One, { lhsSize: 2, rhsSize: 1 } ], // e.g. 12 + 3
+        [ Difficulty.Two, { lhsSize: 1, rhsSize: 2 } ], // e.g. 3 + 12
+        [ Difficulty.Two, { lhsSize: 2, rhsSize: 2 } ], // e.g. 75 + 37
+        [ Difficulty.Two, { lhsSize: 3, rhsSize: 2 } ], // e.g. 583 + 96
+        [ Difficulty.Three, {lhsSize: 2, rhsSize: 3} ],
+        [ Difficulty.Three, {lhsSize: 3, rhsSize: 3} ],
+        [ Difficulty.Three, {lhsSize: 4, rhsSize: 3} ],
+    ]);
+
     static generate(difficulty: Difficulty): Exercise {
-        let lhs = 0;
-        let rhs = 0;
+        const genOpts = this.options.get(difficulty);
 
-        for (let numIter = 0; difficulty > 0; difficulty--, numIter++) {
-            const mode = numIter == 0 ? 'nonzero' : undefined;
-
-            const leftDigit = RandomGenerator.digit(mode);
-            const rightDigit = RandomGenerator.digit(mode);
-
-            const carry = leftDigit + rightDigit >= 10 && numIter > 0;
-
-            if (carry) {
-                difficulty--;
-            }
-
-            lhs = 10 * lhs + leftDigit;
-            rhs = 10 * rhs + rightDigit;
+        if (!genOpts) {
+            throw new Error(`Generate options for passed difficulty [${difficulty}] could not be found.`);
         }
+
+        const lhs = RandomGenerator.number(genOpts.lhsSize);
+        const rhs = RandomGenerator.number(genOpts.rhsSize);
 
         return new Exercise(Operation.Addition, lhs, rhs);
     }
