@@ -1,7 +1,7 @@
 export class Random {
-    static number(numberOfDigits: number): number {
+    static positiveInteger(numberOfDigits: number): number {
         if (numberOfDigits <= 0) {
-            throw new Error('Numbers should consist of at least one digit.');
+            throw new Error('Positive integers should consist of at least one digit.');
         }
 
         let res = this.digit('nonzero');
@@ -30,8 +30,13 @@ export class Random {
         return Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
     }
 
-    static choice(array: any[]): any {
+    static choice<T>(iterable: Iterable<T>): T {
+        const array = Array.from(iterable);
         const index = this.between(0, array.length);
+
+        if (array.length === 0) {
+            throw new Error('Unable to choose randomly from empty iterable.');
+        }
 
         return array[index];
     }

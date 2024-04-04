@@ -36,8 +36,8 @@ export class AdditionGenerator implements ExerciseGenerator{
 
         const opt = Random.choice(genOpts);
 
-        const lhs = Random.number(opt.lhsSize);
-        const rhs = Random.number(opt.rhsSize);
+        const lhs = Random.positiveInteger(opt.lhsSize);
+        const rhs = Random.positiveInteger(opt.rhsSize);
 
         return new Exercise(Operation.Addition, lhs, rhs);
     }

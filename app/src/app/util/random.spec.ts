@@ -4,12 +4,12 @@ describe('Random', () => {
     const numIterations = 10;
 
     it('should not allow zero or negative digit size for number generation', () => {
-        expect(() => Random.number(0)).toThrow();
-        expect(() => Random.number(-1)).toThrow();
-        expect(() => Random.number(Number.MIN_SAFE_INTEGER)).toThrow();
+        expect(() => Random.positiveInteger(0)).toThrow();
+        expect(() => Random.positiveInteger(-1)).toThrow();
+        expect(() => Random.positiveInteger(Number.MIN_SAFE_INTEGER)).toThrow();
     });
 
-    it('should generate numbers of specified digit size', () => {
+    it('should generate positive integers of specified digit size', () => {
         const digitSize = [1, 3, 5, 7];
 
         digitSize.forEach(size => {
@@ -17,7 +17,7 @@ describe('Random', () => {
             const upperBound = 10**size;
 
             for (let i = 0; i < numIterations; i++) {
-                boundsChecker(lowerBound, upperBound, Random.number(size));
+                boundsChecker(lowerBound, upperBound, Random.positiveInteger(size));
             }
         });
     });
@@ -57,5 +57,9 @@ describe('Random', () => {
             expect(random).toBeGreaterThanOrEqual(lowerBound);
             expect(random).toBeLessThan(upperBound);
         }
+    });
+
+    it('should throw errors when requesting random choice from empty iterable', () => {
+        expect(() => Random.choice([])).toThrow();
     });
 });
