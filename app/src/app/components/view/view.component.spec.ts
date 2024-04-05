@@ -36,7 +36,7 @@ describe('ViewComponent', () => {
     });
 
     it('should show end screen after all exercises', () => {
-        component.exercises.forEach(_exercise => {
+        component.exercises.forEach(() => {
             expect(component.showEndScreen).toBeFalse();
             component.next();
             component.next();

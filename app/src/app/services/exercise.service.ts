@@ -18,7 +18,7 @@ export class ExerciseService {
     ];
 
     generate(difficulty: Difficulty): Exercise[] {
-        let res = [];
+        const res = [];
 
         for (let i = 0; i < ExerciseService.NUM_EXERCISES; i++) {
             res.push(this.getRandomExercise(difficulty));

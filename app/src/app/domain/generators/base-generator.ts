@@ -7,7 +7,7 @@ import { Random } from "util/random";
 interface GenerateOptions {
     lhsSize: number;
     rhsSize: number; 
-};
+}
 
 export class BaseGenerator implements ExerciseGenerator {
     private readonly options = new Map<Difficulty, GenerateOptions[]>([
