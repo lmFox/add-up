@@ -1,8 +1,8 @@
 import { Operation } from "domain/operation";
 import { BaseGenerator } from "./base-generator";
 
-export class AdditionGenerator extends BaseGenerator {
+export class SubtractionGenerator extends BaseGenerator {
     protected override get operation(): Operation {
-        return Operation.Addition;
+        return Operation.Subtraction;
     }
 }
