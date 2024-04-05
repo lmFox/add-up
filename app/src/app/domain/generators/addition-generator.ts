@@ -1,8 +1,8 @@
-import { Difficulty } from "../difficulty";
-import { Exercise } from "../exercise";
+import { Difficulty } from "domain/difficulty";
+import { Exercise } from "domain/exercise";
+import { Operation } from "domain/operation";
+import { Random } from "util/random";
 import { ExerciseGenerator } from "./exercise-generator";
-import { Operation } from "../operation";
-import { Random } from "../../util/random";
 
 interface IGenerateOptions {
     lhsSize: number;
