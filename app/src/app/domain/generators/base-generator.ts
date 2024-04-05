@@ -4,13 +4,13 @@ import { ExerciseGenerator } from "./exercise-generator";
 import { Operation } from "domain/operation";
 import { Random } from "util/random";
 
-interface GenerateOptions {
+export interface GenerateOptions {
     lhsSize: number;
     rhsSize: number; 
 }
 
 export class BaseGenerator implements ExerciseGenerator {
-    private readonly options = new Map<Difficulty, GenerateOptions[]>([
+    protected readonly options = new Map<Difficulty, GenerateOptions[]>([
         [ Difficulty.One, [
             { lhsSize: 1, rhsSize: 1 },
             { lhsSize: 2, rhsSize: 1 }
