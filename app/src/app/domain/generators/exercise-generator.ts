@@ -1,7 +1,7 @@
-import { Difficulty } from "../difficulty";
-import { Exercise } from "../exercise";
+import { Difficulty } from "domain/difficulty";
+import { Exercise } from "domain/exercise";
 
 export interface ExerciseGenerator {
-    generate(difficulty: Difficulty): Exercise;
+    random(difficulty: Difficulty): Exercise;
 }
 

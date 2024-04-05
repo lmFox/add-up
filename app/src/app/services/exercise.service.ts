@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Exercise } from '../domain/exercise';
-import { Difficulty } from '../domain/difficulty';
-import { Operation } from '../domain/operation';
-import { AdditionGenerator, ExerciseGenerator } from '../domain/generators';
-import { Random } from '../util/random';
+import { Exercise } from 'domain/exercise';
+import { Difficulty } from 'domain/difficulty';
+import { AdditionGenerator, ExerciseGenerator } from 'domain/generators';
+import { Random } from 'util/random';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +10,9 @@ import { Random } from '../util/random';
 export class ExerciseService {
     private static readonly NUM_EXERCISES = 30;
     
-    private readonly generators = new Map<Operation, ExerciseGenerator>([
-        [ Operation.Addition, new AdditionGenerator() ]
-    ]);
+    private readonly generators: ExerciseGenerator[] = [
+        new AdditionGenerator()
+    ];
 
     generate(difficulty: Difficulty): Exercise[] {
         let res = [];
@@ -26,9 +25,8 @@ export class ExerciseService {
     }
 
     private getRandomExercise(difficulty: Difficulty): Exercise {
-        const operation = Random.choice(this.generators.keys());
-        const generator = this.generators.get(operation);
+        const generator = Random.choice(this.generators);
 
-        return generator!.generate(difficulty);
+        return generator.random(difficulty);
     }
 }

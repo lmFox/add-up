@@ -27,7 +27,7 @@ export class AdditionGenerator implements ExerciseGenerator{
         ]]
     ]);
 
-    generate(difficulty: Difficulty): Exercise {
+    random(difficulty: Difficulty): Exercise {
         const genOpts = this.options.get(difficulty);
 
         if (!genOpts) {
