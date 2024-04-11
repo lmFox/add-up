@@ -13,17 +13,18 @@ export class BaseGenerator implements ExerciseGenerator {
     protected readonly options = new Map<Difficulty, GenerateOptions[]>([
         [ Difficulty.One, [
             { lhsSize: 1, rhsSize: 1 },
-            { lhsSize: 2, rhsSize: 1 }
+            { lhsSize: 2, rhsSize: 1 },
+            { lhsSize: 1, rhsSize: 2 },
         ]],
         [ Difficulty.Two, [
-            { lhsSize: 1, rhsSize: 2 },
             { lhsSize: 2, rhsSize: 2 },
-            { lhsSize: 3, rhsSize: 2 }
+            { lhsSize: 3, rhsSize: 2 },
+            { lhsSize: 2, rhsSize: 3 },
         ]], 
         [ Difficulty.Three, [
-            {lhsSize: 2, rhsSize: 3},
-            {lhsSize: 3, rhsSize: 3},
-            {lhsSize: 4, rhsSize: 3}
+            { lhsSize: 3, rhsSize: 3 },
+            { lhsSize: 4, rhsSize: 3 },
+            { lhsSize: 3, rhsSize: 4 }
         ]]
     ]);
 
