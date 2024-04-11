@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ExerciseService } from '../../services/exercise.service';
-import { Exercise } from '../../domain/exercise';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { ExerciseService } from 'services/exercise.service';
+import { Exercise } from 'domain/exercise';
+import { Difficulty } from 'domain/difficulty';
 
 @Component({
     selector: 'app-view',
@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
     styleUrl: './view.component.scss'
 })
 export class ViewComponent {
+    private readonly difficulty = Difficulty.Two;
     readonly exercises: Exercise[];
     
     index: number;
@@ -29,11 +30,10 @@ export class ViewComponent {
     }
 
     constructor(
-        private readonly exerciseService: ExerciseService,
-        private readonly localStorageService: LocalStorageService
+        private readonly exerciseService: ExerciseService
     ) {
         this.index = 0;
-        this.exercises = this.exerciseService.generate(this.localStorageService.difficulty);
+        this.exercises = this.exerciseService.generate(this.difficulty);
     }
 
     next() {
