@@ -61,5 +61,31 @@ describe('Random', () => {
 
     it('should throw errors when requesting random choice from empty iterable', () => {
         expect(() => Random.choice([])).toThrow();
+
+        expect(checkSufficientlyRandom(() => Random.choice([1, 2, 3]))).toBeTrue();
     });
+
+    function checkSufficientlyRandom<T>(randomValueGenerator: (() => T)): boolean {
+        const NUM_ITERATIONS = 300;
+        
+        const result = new Map<T, number>();
+
+        // Generate count mapping.
+        for (let i = 0; i < NUM_ITERATIONS; i++) {
+            const key = randomValueGenerator();
+            const count = result.has(key) ? result.get(key)! + 1 : 1;
+            result.set(key, count);
+        }
+
+        // Determine "randomness" by checking whether count is more or less uniform.
+        const counts = Array.from(result.values());
+        counts.forEach(count => {
+            const occurenceRatio = count / NUM_ITERATIONS;
+            const expectedRatio = 1 / counts.length;
+
+            expect(occurenceRatio).toBeCloseTo(expectedRatio, 1);
+        });
+
+        return true;
+    }
 });
