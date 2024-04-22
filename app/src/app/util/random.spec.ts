@@ -1,7 +1,7 @@
 import { Random } from "./random";
 
 describe('Random', () => {
-    const numIterations = 10;
+    const NUM_ITERATIONS = 300;
 
     it('should not allow zero or negative digit size for number generation', () => {
         expect(() => Random.positiveInteger(0)).toThrow();
@@ -16,29 +16,18 @@ describe('Random', () => {
             const lowerBound = 10**(size-1);
             const upperBound = 10**size;
 
-            for (let i = 0; i < numIterations; i++) {
-                boundsChecker(lowerBound, upperBound, Random.positiveInteger(size));
+            for (let i = 0; i < NUM_ITERATIONS; i++) {
+                const gen = Random.positiveInteger(size);
+                expect(gen).toBeGreaterThanOrEqual(lowerBound);
+                expect(gen).toBeLessThan(upperBound);
             }
         });
     });
 
     it('should generate digits', () => {
-        const cases: ('nonzero' | undefined)[] = ['nonzero', undefined];
-
-        cases.forEach(mode => {
-            const lowerBound = mode === 'nonzero' ? 1 : 0;
-            const upperBound = 10;
-
-            for (let i = 0; i < numIterations; i++) {
-                boundsChecker(lowerBound, upperBound, Random.digit(mode));
-            }
-        });
+        checkSufficientlyRandomAndDomain(() => Random.digit(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        checkSufficientlyRandomAndDomain(() => Random.digit('nonzero'), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
-
-    function boundsChecker(lowerBound: number, upperBound: number, toCheck: number) {
-        expect(toCheck).toBeGreaterThanOrEqual(lowerBound);
-        expect(toCheck).toBeLessThan(upperBound);
-    }
 
     it('should throw on incorrect bounds', () => {
         expect(() => Random.between(0.01, 1)).toThrow();
@@ -48,44 +37,63 @@ describe('Random', () => {
     });
 
     it('should generate integers between bounds', () => {
-        const lowerBound = -5;
-        const upperBound = 10;
+        const lowerBound = -2
+        const upperBound = 9;
+        const range = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-        for (let i = 0; i < numIterations; i++) {
-            const random = Random.between(lowerBound, upperBound);
-
-            expect(random).toBeGreaterThanOrEqual(lowerBound);
-            expect(random).toBeLessThan(upperBound);
-        }
+        checkSufficientlyRandomAndDomain(() => Random.between(lowerBound, upperBound), range);
     });
 
     it('should throw errors when requesting random choice from empty iterable', () => {
         expect(() => Random.choice([])).toThrow();
 
-        expect(checkSufficientlyRandom(() => Random.choice([1, 2, 3]))).toBeTrue();
+        const domainRange = [1, 2, 3, 4, 5];
+        checkSufficientlyRandomAndDomain(() => Random.choice(domainRange), domainRange);
     });
 
-    function checkSufficientlyRandom<T>(randomValueGenerator: (() => T)): boolean {
-        const NUM_ITERATIONS = 300;
-        
+    function checkSufficientlyRandomAndDomain<T>(randomValueGenerator: (() => T), range: T[]) {
+        const frequencies = checkSufficientlyRandom(randomValueGenerator);
+
+        const generated = new Set(frequencies.keys());
+
+        range.forEach(value => {
+            expect(generated.has(value)).toBeTrue();
+            generated.delete(value);
+        });
+    }
+
+    function checkSufficientlyRandom<T>(randomValueGenerator: (() => T)): Map<T, number> {
+        const values = [];
+        for (let i = 0; i < NUM_ITERATIONS; i++) {
+            values.push(randomValueGenerator());
+        }
+
+        const frequencies = frequencyCount(values);
+        checkUniformness(frequencies);
+
+        return frequencies;
+    }
+
+    function frequencyCount<T>(iter: Iterable<T>): Map<T, number> {
         const result = new Map<T, number>();
 
-        // Generate count mapping.
-        for (let i = 0; i < NUM_ITERATIONS; i++) {
-            const key = randomValueGenerator();
+        for (const key of iter) {
             const count = result.has(key) ? result.get(key)! + 1 : 1;
             result.set(key, count);
         }
 
-        // Determine "randomness" by checking whether count is more or less uniform.
-        const counts = Array.from(result.values());
+        return result;
+    }
+
+    function checkUniformness<T>(frequencies: Map<T, number>) {
+        const counts = Array.from(frequencies.values());
+        const total = counts.reduce((sum, number) => sum + number, 0);
+
         counts.forEach(count => {
-            const occurenceRatio = count / NUM_ITERATIONS;
+            const observedRatio = count / total;
             const expectedRatio = 1 / counts.length;
 
-            expect(occurenceRatio).toBeCloseTo(expectedRatio, 1);
+            expect(observedRatio).toBeCloseTo(expectedRatio, 1);
         });
-
-        return true;
     }
 });
