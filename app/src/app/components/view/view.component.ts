@@ -29,9 +29,7 @@ export class ViewComponent {
         return `${this.index} / ${this.exercises.length}`;
     }
 
-    constructor(
-        private readonly exerciseService: ExerciseService
-    ) {
+    constructor(private readonly exerciseService: ExerciseService) {
         this.index = 0;
         this.exercises = this.exerciseService.generate(this.difficulty);
     }
