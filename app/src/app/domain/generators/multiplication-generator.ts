@@ -16,7 +16,7 @@ export class MultiplicationGenerator extends BaseGenerator {
         ]]
     ]);
     
-    protected override get operation(): Operation {
+    override get operation(): Operation {
         return Operation.Multiplication;
     }
 }

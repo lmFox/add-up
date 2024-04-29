@@ -17,7 +17,7 @@ export class DivisionGenerator extends BaseGenerator {
         ]]
     ]);
 
-    protected override get operation(): Operation {
+    override get operation(): Operation {
         return Operation.Division;
     }
 

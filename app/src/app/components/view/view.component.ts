@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ExerciseService } from 'services/exercise.service';
 import { Exercise } from 'domain/exercise';
-import { Difficulty } from 'domain/difficulty';
 
 @Component({
     selector: 'app-view',
@@ -11,7 +10,6 @@ import { Difficulty } from 'domain/difficulty';
     styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-    private readonly difficulty = Difficulty.Two;
     readonly exercises: Exercise[];
     
     index: number;
@@ -31,7 +29,7 @@ export class ViewComponent {
 
     constructor(private readonly exerciseService: ExerciseService) {
         this.index = 0;
-        this.exercises = this.exerciseService.generate(this.difficulty);
+        this.exercises = this.exerciseService.generate();
     }
 
     next() {
