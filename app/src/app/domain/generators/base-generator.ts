@@ -28,7 +28,7 @@ export class BaseGenerator implements ExerciseGenerator {
         ]]
     ]);
 
-    protected get operation(): Operation {
+    get operation(): Operation {
         throw new Error('Property get operation not implemented.');
     }
 

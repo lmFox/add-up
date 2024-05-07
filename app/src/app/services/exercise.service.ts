@@ -3,6 +3,7 @@ import { Exercise } from 'domain/exercise';
 import { Difficulty } from 'domain/difficulty';
 import { AdditionGenerator, DivisionGenerator, ExerciseGenerator, MultiplicationGenerator, SubtractionGenerator } from 'domain/generators';
 import { Random } from 'util/random';
+import { DifficultyService } from './difficulty.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,18 +18,21 @@ export class ExerciseService {
         new DivisionGenerator()
     ];
 
-    generate(difficulty: Difficulty): Exercise[] {
+    constructor(private readonly difficultyService: DifficultyService) {}
+
+    generate(): Exercise[] {
         const res = [];
 
         for (let i = 0; i < ExerciseService.NUM_EXERCISES; i++) {
-            res.push(this.getRandomExercise(difficulty));
+            res.push(this.getRandomExercise());
         }
         
         return res;
     }
 
-    private getRandomExercise(difficulty: Difficulty): Exercise {
+    private getRandomExercise(): Exercise {
         const generator = Random.choice(this.generators);
+        const difficulty = this.difficultyService.lookup(generator.operation);
 
         return generator.random(difficulty);
     }
