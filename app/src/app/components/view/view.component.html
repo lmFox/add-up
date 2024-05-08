@@ -2,14 +2,14 @@
     @if (!showEndScreen) {
         <p>{{ current?.toString() }}</p>
         <hr/>
-        <p class="answer" [class.show]="showAnswer">{{ current?.answer() }}</p>
+        <p [style.visibility]="showAnswer ? 'visible' : 'hidden'">
+            {{ current?.answer() }}
+        </p>
         
         <div class="progress-bar">
-            <label>
-                {{ progress }}
-                <progress [value]="index" [max]="exercises.length"></progress>
-            </label>
-            <button (click)="next()">Next</button>
+            <label for="exercises">{{ progress }}</label>
+            <progress id="exercises" [value]="index" [max]="exercises.length"></progress>
+            <button tabindex="1" (click)="next()">Next</button>
         </div>
     }
     @else {
