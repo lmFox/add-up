@@ -16,6 +16,8 @@ export class DifficultyService {
                 return Difficulty.Two;
             case Operation.Division:
                 return Difficulty.Two;
+            case Operation.Reverse:
+                return Difficulty.Five;
         }
     }
 }

@@ -3,5 +3,6 @@ export enum Difficulty {
     Two,
     Three,
     Four,
-    Max = Four
+    Five,
+    Max = Five
 }

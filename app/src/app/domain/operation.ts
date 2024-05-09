@@ -2,5 +2,6 @@ export enum Operation {
     Addition = '+',
     Subtraction = '-',
     Multiplication = '*',
-    Division = '/'
+    Division = '/',
+    Reverse = '⇆'
 }
