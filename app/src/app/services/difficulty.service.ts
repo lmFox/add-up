@@ -9,11 +9,11 @@ export class DifficultyService {
     public lookup(operation: Operation): Difficulty {
         switch(operation) {
             case Operation.Addition:
-                return Difficulty.Three;
+                return Difficulty.Four;
             case Operation.Subtraction:
-                return Difficulty.Three;
+                return Difficulty.Four;
             case Operation.Multiplication:
-                return Difficulty.Two;
+                return Difficulty.Three;
             case Operation.Division:
                 return Difficulty.Two;
         }
