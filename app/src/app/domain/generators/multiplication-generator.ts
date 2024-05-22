@@ -11,8 +11,8 @@ export class MultiplicationGenerator extends BaseGenerator {
         ]],
         [Difficulty.Three, [
             { lhsSize: 2, rhsSize: 2 },
-            { lhsSize: 3, rhsSize: 1 },
-            { lhsSize: 1, rhsSize: 3 }
+            { lhsSize: 3, rhsSize: 2 },
+            { lhsSize: 2, rhsSize: 3 }
         ]]
     ]);
     

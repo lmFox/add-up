@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from 'domain/exercise';
-import { Difficulty } from 'domain/difficulty';
 import { AdditionGenerator, DivisionGenerator, ExerciseGenerator, MultiplicationGenerator, SubtractionGenerator } from 'domain/generators';
 import { Random } from 'util/random';
 import { DifficultyService } from './difficulty.service';
