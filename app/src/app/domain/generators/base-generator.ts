@@ -25,6 +25,11 @@ export class BaseGenerator implements ExerciseGenerator {
             { lhsSize: 3, rhsSize: 3 },
             { lhsSize: 4, rhsSize: 3 },
             { lhsSize: 3, rhsSize: 4 }
+        ]],
+        [ Difficulty.Four, [
+            { lhsSize: 4, rhsSize: 4 },
+            { lhsSize: 5, rhsSize: 4 },
+            { lhsSize: 4, rhsSize: 5 }
         ]]
     ]);
 
