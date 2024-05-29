@@ -2,6 +2,7 @@ import { Operation } from "domain/operation";
 import { BaseGenerator, GenerateOptions } from "./base-generator";
 import { Difficulty } from "domain/difficulty";
 import { Exercise } from "domain/exercise";
+import { Random } from "util/random";
 
 export class DivisionGenerator extends BaseGenerator {
     protected override readonly options = new Map<Difficulty, GenerateOptions[]>([
@@ -32,5 +33,12 @@ export class DivisionGenerator extends BaseGenerator {
         // We transform the generated exercise in order to guarantee
         // that the division results in a positive integer answer.
         return new Exercise(this.operation, base.lhs * base.rhs, base.rhs);
-    } 
+    }
+
+    override warmup(): Exercise {
+        const lhs = Random.between(1, 20);
+        const rhs = Random.between(1, 10);
+
+        return new Exercise(this.operation, lhs * rhs, rhs);
+    }
 }

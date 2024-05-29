@@ -51,4 +51,8 @@ export class BaseGenerator implements ExerciseGenerator {
 
         return new Exercise(this.operation, lhs, rhs);
     }
+
+    warmup(): Exercise {
+        return new Exercise(this.operation, Random.between(1, 20), Random.between(1, 20));
+    }
 }
