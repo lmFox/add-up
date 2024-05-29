@@ -23,10 +23,19 @@ export class ExerciseService {
         const res = [];
 
         for (let i = 0; i < ExerciseService.NUM_EXERCISES; i++) {
+            res.push(this.getRandomWarmupExercise());
+        }
+
+        for (let i = 0; i < ExerciseService.NUM_EXERCISES; i++) {
             res.push(this.getRandomExercise());
         }
         
         return res;
+    }
+
+    private getRandomWarmupExercise(): Exercise {
+        const generator = Random.choice(this.generators);
+        return generator.warmup();
     }
 
     private getRandomExercise(): Exercise {
