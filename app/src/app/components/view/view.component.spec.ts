@@ -18,29 +18,15 @@ describe('ViewComponent', () => {
     });
 
     it('should generate exercises', () => {
-        expect(component.exercises.length).toBeGreaterThan(0);
-    });
-
-    it('should progress through the exercises', () => {
-        component.exercises.forEach(exercise => {
-            expect(component.current).toEqual(exercise);
-            expect(component.showAnswer).toBeFalse();
-            component.next();
-
-            expect(component.current).toEqual(exercise);            
-            expect(component.showAnswer).toBeTrue();
-            component.next();
-        });
-
-        expect(component.current).toBeUndefined();
+        expect(component.current).toBeDefined();
+        expect(component.progress.max).toBeGreaterThan(0);
     });
 
     it('should show end screen after all exercises', () => {
-        component.exercises.forEach(() => {
+        for (let index = component.progress.index; index < component.progress.max; index += 1) {
             expect(component.showEndScreen).toBeFalse();
-            component.next();
-            component.next();
-        });
+            component.proceedNextExercise();
+        }
 
         expect(component.showEndScreen).toBeTrue();
     });
