@@ -3,12 +3,21 @@ main {
     min-width: min-content;
     max-width: 40rem;
 
-    p {
+    .settingsButtonBar {
+        display: flex;
+        justify-content: end;
+
+        button {
+            font-size: 2em;
+        }
+    }
+
+    .expression {
+        font-family: monospace;
         font-size: 2em;
         margin: 2em;
         text-align: center;
     }
-
 
     .progress-bar {
         display: flex;

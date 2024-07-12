@@ -1,8 +1,13 @@
 <main aria-live="polite">
+    <div class="settingsButtonBar">
+        <button (click)="toggleShowSettings()">⚙️</button>
+    </div>
+    <app-settings *ngIf="showSettings" (settingsChange)="regenerate()"></app-settings>
+
     @if (!showEndScreen) {
-        <p>{{ current?.toString() }}</p>
+        <p class="expression">{{ current?.toString() }}</p>
         <hr/>
-        <p [style.visibility]="showAnswer ? 'visible' : 'hidden'">
+        <p class="expression" [style.visibility]="showAnswer ? 'visible' : 'hidden'">
             {{ current?.answer() }}
         </p>
         
