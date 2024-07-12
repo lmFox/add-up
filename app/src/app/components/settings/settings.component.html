@@ -1,0 +1,14 @@
+<fieldset>
+    <legend>🧠 Difficulty</legend>
+    
+    <div class="combination-container" *ngFor="let combi of combinations">
+        <label>
+            {{ combi.operation }}:
+        
+            <input type="number" [min]="Difficulty.One" [max]="Difficulty.Max"
+                [(ngModel)]="combi.difficulty" />
+        </label>
+    </div>
+
+    <button class="applyButton" (click)="apply()">Apply ✅</button>
+</fieldset>

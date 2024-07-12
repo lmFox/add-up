@@ -1,51 +1,50 @@
 import { Component } from '@angular/core';
 import { ExerciseService } from 'services/exercise.service';
 import { Exercise } from 'domain/exercise';
+import { SettingsComponent } from 'components/settings/settings.component';
+import { ExerciseComponent } from 'components/exercise/exercise.component';
+import { IProgress } from 'domain/i-progress';
 
 @Component({
     selector: 'app-view',
     standalone: true,
-    imports: [],
+    imports: [ExerciseComponent, SettingsComponent],
     templateUrl: './view.component.html',
     styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-    readonly exercises: Exercise[];
-    
-    index: number;
-    showAnswer = false;
+    private index: number = 0;
+    private exercises: Exercise[] = [];
+
+    showSettings = false;
 
     get current(): Exercise | undefined {
         return this.exercises.at(this.index);
+    }
+
+    get progress(): IProgress {
+        return {
+            index: this.index,
+            max: this.exercises.length
+        };
     }
     
     get showEndScreen(): boolean {
         return !this.current;
     }
 
-    get progress(): string {
-        return `${this.index} / ${this.exercises.length}`;
+    constructor(private readonly exerciseService: ExerciseService) {
+        this.generate();
     }
 
-    constructor(private readonly exerciseService: ExerciseService) {
+    generate() {
         this.index = 0;
         this.exercises = this.exerciseService.generate();
+
+        this.showSettings = false;
     }
 
-    next() {
-        this.toggleShowAnswer();
-
-        // Answer has been seen previously.
-        if (!this.showAnswer) {
-            this.proceedNextExercise();
-        }
-    }
-
-    private toggleShowAnswer() {
-        this.showAnswer = !this.showAnswer;
-    }
-
-    private proceedNextExercise() {
+    proceedNextExercise() {
         this.index += 1;
     }
 }
