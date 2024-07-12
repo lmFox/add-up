@@ -7,15 +7,22 @@ import { Operation } from 'domain/operation';
 })
 export class DifficultyService {
     public lookup(operation: Operation): Difficulty {
-        switch(operation) {
-            case Operation.Addition:
-                return Difficulty.Four;
-            case Operation.Subtraction:
-                return Difficulty.Four;
-            case Operation.Multiplication:
-                return Difficulty.Three;
-            case Operation.Division:
-                return Difficulty.Two;
+        const result = window.localStorage.getItem(operation);
+
+        if (result) {
+            const resultDifficulty = Number.parseInt(result, 10);
+
+            for (let difficulty = Difficulty.One; difficulty <= Difficulty.Max; difficulty += 1) {
+                if (difficulty === resultDifficulty) {
+                    return difficulty;
+                }
+            }
         }
+
+        return Difficulty.One;
+    }
+
+    public set(operation: Operation, difficulty: Difficulty) {
+        window.localStorage.setItem(operation, difficulty.toString(10));
     }
 }
