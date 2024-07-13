@@ -25,6 +25,7 @@ describe('ViewComponent', () => {
     it('should show end screen after all exercises', () => {
         for (let index = component.progress.index; index < component.progress.max; index += 1) {
             expect(component.showEndScreen).toBeFalse();
+            expect(component.current).toBeDefined();
             component.proceedNextExercise();
         }
 
