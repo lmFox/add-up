@@ -1,28 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
+import { ISettings } from 'domain/i-settings';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DifficultyService {
-    public lookup(operation: Operation): Difficulty {
-        const result = window.localStorage.getItem(operation);
+export class SettingsService {
+    private itemKey = 'settings';
+    private _settings: ISettings;
+
+    constructor() {
+        const result = window.localStorage.getItem(this.itemKey);
 
         if (result) {
-            const resultDifficulty = Number.parseInt(result, 10);
-
-            for (let difficulty = Difficulty.One; difficulty <= Difficulty.Max; difficulty += 1) {
-                if (difficulty === resultDifficulty) {
-                    return difficulty;
-                }
-            }
+            this._settings = JSON.parse(result);
+        } else {
+            this._settings = {};
         }
+    }
 
+    get settings(): ISettings {
+        return this._settings;
+    }
+
+    set settings(value: ISettings) {
+        const merged = {...this.settings, ...value};
+
+        this._settings = merged;
+        window.localStorage.setItem(this.itemKey, JSON.stringify(merged));
+    }
+
+    get timerDuration(): number { 
+        return this.settings.timerDuration ?? 2000;
+    }
+
+    public lookup(operation: Operation): Difficulty {
+        if (this.settings.difficulty) {
+            return this.settings.difficulty[operation] ?? Difficulty.One;
+        }
+        
         return Difficulty.One;
     }
 
     public set(operation: Operation, difficulty: Difficulty) {
-        window.localStorage.setItem(operation, difficulty.toString(10));
+        if (!this.settings.difficulty) {
+            this.settings.difficulty = {};
+        }
+
+        this.settings.difficulty[operation] = difficulty;
     }
+
 }

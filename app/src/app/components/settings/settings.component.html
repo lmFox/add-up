@@ -10,5 +10,13 @@
         </label>
     </div>
 
+    <div class="combination-container">
+        <label>
+            Timer duration: 
+            <input type="range" min="2000" max="10000" step="1000" [(ngModel)]="timerDuration" /> 
+            {{ timerDuration / 1000 }} seconds
+        </label>
+    </div>
+
     <button class="applyButton" (click)="apply()">Apply ✅</button>
 </fieldset>

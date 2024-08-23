@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DifficultyService } from './difficulty.service';
+import { SettingsService } from './difficulty.service';
 import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
 
 describe('DifficultyService', () => {
-    let service: DifficultyService;
+    let service: SettingsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(DifficultyService);
+        service = TestBed.inject(SettingsService);
     });
 
     it('should lookup difficulties from local storage', () => {
