@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ExerciseService } from 'services/exercise.service';
 import { Exercise } from 'domain/exercise';
 import { SettingsComponent } from 'components/settings/settings.component';
-import { ExerciseComponent } from 'components/exercise/exercise.component';
+import { ExerciseComponent, EShowExercise } from 'components/exercise/exercise.component';
 import { IProgress } from 'domain/i-progress';
 
 @Component({
@@ -31,6 +31,10 @@ export class ViewComponent {
     
     get showEndScreen(): boolean {
         return !this.current;
+    }
+
+    get show(): EShowExercise {
+        return EShowExercise.Exercise;
     }
 
     constructor(private readonly exerciseService: ExerciseService) {

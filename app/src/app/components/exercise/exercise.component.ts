@@ -1,6 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Exercise } from 'domain/exercise';
-import { IProgress } from 'domain/i-progress';
+
+export enum EShowExercise {
+    Exercise,
+    Answer,
+    None
+};
+
+type TVisibility = 'visible' | 'hidden';
 
 @Component({
     selector: 'app-exercise',
@@ -10,31 +17,21 @@ import { IProgress } from 'domain/i-progress';
     styleUrl: './exercise.component.scss'
 })
 export class ExerciseComponent {
-    private _showAnswer = false;
-
-    get showAnswer(): boolean {
-        return this._showAnswer;
-    }
 
     @Input({ required: true })
     exercise!: Exercise;
 
-    @Input({required: true})
-    progress!: IProgress;
+    @Input({ required: true })
+    show!: EShowExercise;
 
-    @Output()
-    requestNext = new EventEmitter<void>();
+    get visibilityExercise(): TVisibility { 
+        const visibility = this.show === EShowExercise.Exercise || this.show === EShowExercise.Answer;
 
-    next() {
-        this.toggleShowAnswer();
-
-        // Answer has been seen previously, so request new one.
-        if (!this.showAnswer) {
-            this.requestNext.emit();
-        }
+        return visibility ? 'visible' : 'hidden';
     }
 
-    private toggleShowAnswer() {
-        this._showAnswer = !this._showAnswer;
+    get visibilityAnswer(): TVisibility {
+        return this.show === EShowExercise.Answer ? 'visible' : 'hidden';
     }
+
 }
