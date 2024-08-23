@@ -13,19 +13,20 @@ import { IProgress } from 'domain/i-progress';
     styleUrl: './view.component.scss'
 })
 export class ViewComponent {
-    private index: number = 0;
-    private exercises: Exercise[] = [];
+    private _index: number = 0;
+    private _exercises: Exercise[] = [];
+    private _show = EShowExercise.Exercise;
 
     showSettings = false;
 
     get current(): Exercise | undefined {
-        return this.exercises.at(this.index);
+        return this._exercises.at(this._index);
     }
 
     get progress(): IProgress {
         return {
-            index: this.index,
-            max: this.exercises.length
+            index: this._index,
+            max: this._exercises.length
         };
     }
     
@@ -34,7 +35,7 @@ export class ViewComponent {
     }
 
     get show(): EShowExercise {
-        return EShowExercise.Exercise;
+        return this._show;
     }
 
     constructor(private readonly exerciseService: ExerciseService) {
@@ -42,13 +43,22 @@ export class ViewComponent {
     }
 
     generate() {
-        this.index = 0;
-        this.exercises = this.exerciseService.generate();
+        this._index = 0;
+        this._exercises = this.exerciseService.generate();
 
         this.showSettings = false;
     }
 
-    proceedNextExercise() {
-        this.index += 1;
+    next() {
+        if (this.show === EShowExercise.Answer) {
+            this.proceedNextExercise();
+        } else {
+            this._show = EShowExercise.Answer;
+        }
+    }
+
+    private proceedNextExercise() {
+        this._index += 1;
+        this._show = EShowExercise.Exercise;
     }
 }

@@ -7,7 +7,7 @@ export enum EShowExercise {
     None
 };
 
-type TVisibility = 'visible' | 'hidden';
+export type TVisibility = 'visible' | 'hidden';
 
 @Component({
     selector: 'app-exercise',

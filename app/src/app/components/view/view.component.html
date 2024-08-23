@@ -12,7 +12,7 @@
         <div class="progress-bar">
             <label for="progress">{{ progress.index }} / {{ progress.max }}</label>
             <progress id="progress" [value]="progress.index" [max]="progress.max"></progress>
-            <button>Next</button>
+            <button (click)="next()">Next</button>
         </div>
     }
     @else {
