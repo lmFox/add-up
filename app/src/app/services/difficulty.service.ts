@@ -3,6 +3,8 @@ import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
 import { ISettings } from 'domain/i-settings';
 
+const MIN_TIMER_DURATION = 2000;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -32,7 +34,7 @@ export class SettingsService {
     }
 
     get timerDuration(): number { 
-        return this.settings.timerDuration ?? 2000;
+        return this.settings.timerDuration ?? MIN_TIMER_DURATION;
     }
 
     public lookup(operation: Operation): Difficulty {
