@@ -3,44 +3,65 @@ import { TestBed } from '@angular/core/testing';
 import { SettingsService } from './difficulty.service';
 import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
+import { ISettings } from 'domain/i-settings';
 
 describe('DifficultyService', () => {
-    let service: SettingsService;
-
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(SettingsService);
     });
 
-    it('should lookup difficulties from local storage', () => {
-        const expectedDifficulty = Difficulty.Max;
-        const localStorageSpy = spyOn(window.localStorage, 'getItem')
-                                    .and.returnValue(expectedDifficulty.toString());
+    it('should read and write settings to and from local storage', () => {
+        const mockSettings: ISettings = {
+            difficulty: { [Operation.Addition]: Difficulty.Two },
+            timerDuration: SettingsService.MIN_TIMER_DURATION
+        };
+        const getItemSpy = spyOn(window.localStorage, 'getItem').and.returnValue(JSON.stringify(mockSettings));
+        const setItemSpy = spyOn(window.localStorage, 'setItem').and.stub();
 
-        expect(service.lookup(Operation.Addition)).toBe(expectedDifficulty);
-        expect(localStorageSpy).toHaveBeenCalled();
+        const service = TestBed.inject(SettingsService);
+        expect(service.settings).toEqual(mockSettings);
+        expect(getItemSpy).toHaveBeenCalledOnceWith(SettingsService.ITEM_KEY);
+
+        mockSettings.difficulty = {};
+
+        service.settings = mockSettings;
+
+        expect(service.settings).toEqual(mockSettings);
+        expect(setItemSpy).toHaveBeenCalledOnceWith(SettingsService.ITEM_KEY, JSON.stringify(mockSettings));
     });
 
-    it('should return lowest difficulty when not found in local storage', () => {
-        spyOn(window.localStorage, 'getItem').and.returnValue(null);
+    describe('lookup settings', () => {
+        let service: SettingsService;
+        let mockSettings: ISettings;
+        let settingsSpy: jasmine.Spy;
+        
+        beforeEach(() => {
+            service = TestBed.inject(SettingsService);
 
-        expect(service.lookup(Operation.Addition)).toBe(Difficulty.One);
-    });
-
-    it('should return lowest difficulty when incorrect value found in local storage', () => {
-        const dirty = ['-1', (Difficulty.Max + 1).toString(), 'asdf'];
-
-        spyOn(window.localStorage, 'getItem').and.returnValues(...dirty);
-
-        dirty.forEach(() => {
-            expect(service.lookup(Operation.Addition)).toBe(Difficulty.One);
+            mockSettings = {};
+            settingsSpy = spyOnProperty(service, 'settings').and.returnValue(mockSettings);
         });
-    });
+        
+        it('should return difficulty when found', () => {
+            const expectedDifficulty = Difficulty.Max;
+            mockSettings.difficulty = { [Operation.Addition]: expectedDifficulty };
 
-    it('should write difficulty to local storage', () => {
-        const localStorageSpy = spyOn(window.localStorage, 'setItem').and.stub();
-        service.set(Operation.Addition, Difficulty.Max);
+            expect(service.lookup(Operation.Addition)).toEqual(expectedDifficulty);
+        });
 
-        expect(localStorageSpy).toHaveBeenCalledOnceWith(Operation.Addition, Difficulty.Max.toString());
+        it('should return lowest difficulty when not found', () => {
+            expect(service.lookup(Operation.Addition)).toEqual(Difficulty.One);
+        });
+
+        it('should return timer duration when found', () => {
+            const expectedDuration = 4000;
+            mockSettings.timerDuration = expectedDuration;
+
+            expect(service.timerDuration).toEqual(expectedDuration);
+        });
+
+        it('should return minimal timer duration when not found', () => {
+            expect(service.timerDuration).toEqual(SettingsService.MIN_TIMER_DURATION);
+        });
     });
 });

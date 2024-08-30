@@ -50,4 +50,8 @@ describe('ViewComponent', () => {
         expect(component.showEndScreen).toBeTrue();
     });
 
+    it('should hide exercises after timer expires', () => {
+        expect(true).toBeFalse();
+    });
+
 });

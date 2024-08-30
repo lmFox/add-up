@@ -3,17 +3,17 @@ import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
 import { ISettings } from 'domain/i-settings';
 
-const MIN_TIMER_DURATION = 2000;
-
 @Injectable({
     providedIn: 'root'
 })
 export class SettingsService {
-    private itemKey = 'settings';
     private _settings: ISettings;
 
+    static readonly ITEM_KEY = 'settings';
+    static readonly MIN_TIMER_DURATION = 2000;
+
     constructor() {
-        const result = window.localStorage.getItem(this.itemKey);
+        const result = window.localStorage.getItem(SettingsService.ITEM_KEY);
 
         if (result) {
             this._settings = JSON.parse(result);
@@ -30,11 +30,11 @@ export class SettingsService {
         const merged = {...this.settings, ...value};
 
         this._settings = merged;
-        window.localStorage.setItem(this.itemKey, JSON.stringify(merged));
+        window.localStorage.setItem(SettingsService.ITEM_KEY, JSON.stringify(merged));
     }
 
     get timerDuration(): number { 
-        return this.settings.timerDuration ?? MIN_TIMER_DURATION;
+        return this.settings.timerDuration ?? SettingsService.MIN_TIMER_DURATION;
     }
 
     public lookup(operation: Operation): Difficulty {
