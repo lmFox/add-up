@@ -5,7 +5,7 @@ export enum EShowExercise {
     Exercise,
     Answer,
     None
-};
+}
 
 export type TVisibility = 'visible' | 'hidden';
 

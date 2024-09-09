@@ -5,7 +5,7 @@ import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
 import { ISettings } from 'domain/i-settings';
 
-describe('DifficultyService', () => {
+describe('SettingsService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({});
     });
@@ -33,13 +33,12 @@ describe('DifficultyService', () => {
     describe('lookup settings', () => {
         let service: SettingsService;
         let mockSettings: ISettings;
-        let settingsSpy: jasmine.Spy;
         
         beforeEach(() => {
             service = TestBed.inject(SettingsService);
 
             mockSettings = {};
-            settingsSpy = spyOnProperty(service, 'settings').and.returnValue(mockSettings);
+            spyOnProperty(service, 'settings').and.returnValue(mockSettings);
         });
         
         it('should return difficulty when found', () => {
