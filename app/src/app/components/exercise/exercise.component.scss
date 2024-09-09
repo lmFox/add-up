@@ -4,27 +4,3 @@
     margin: 2em;
     text-align: center;
 }
-
-.progress-bar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: end;
-    align-items: center;
-
-    label {
-        flex: 0 0 content;
-        font-size: 1.5em;
-        margin-right: 0.5rem;
-    }
-
-    progress {
-        flex: 1 1;
-    }
-
-    button {
-        touch-action: manipulation;
-        flex: 0 0 content;
-        font-size: 2em;
-        margin-left: 0.5rem;
-    }
-}

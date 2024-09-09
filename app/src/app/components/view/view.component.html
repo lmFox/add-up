@@ -7,11 +7,13 @@
             <app-settings (settingsChange)="generate()"></app-settings>
         }
 
-        <app-exercise
-            [exercise]="current"
-            [progress]="progress"
-            (requestNext)="proceedNextExercise()">
-        </app-exercise>
+        <app-exercise [exercise]="current" [show]="show"></app-exercise>
+
+        <div class="progress-bar">
+            <label for="progress">{{ progress.index }} / {{ progress.max }}</label>
+            <progress id="progress" [value]="progress.index" [max]="progress.max"></progress>
+            <button (click)="next()">Next</button>
+        </div>
     }
     @else {
         <h4>Yay you have finished this exercise!</h4>

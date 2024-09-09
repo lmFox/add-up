@@ -1,11 +1,7 @@
-<p class="expression">{{ exercise.toString() }}</p>
+<p class="expression" [style.visibility]="visibilityExercise">
+    {{ exercise.toString() }}
+</p>
 <hr/>
-<p class="expression" [style.visibility]="showAnswer ? 'visible' : 'hidden'">
+<p class="expression" [style.visibility]="visibilityAnswer">
     {{ exercise.answer() }}
 </p>
-
-<div class="progress-bar">
-    <label for="progress">{{ progress.index }} / {{ progress.max }}</label>
-    <progress id="progress" [value]="progress.index" [max]="progress.max"></progress>
-    <button (click)="next()">Next</button>
-</div>
