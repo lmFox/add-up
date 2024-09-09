@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 
 import { ViewComponent } from './view.component';
 import { EShowExercise } from 'components/exercise/exercise.component';
-import { SettingsService } from 'services/difficulty.service';
+import { SettingsService } from 'services/settings.service';
 
 describe('ViewComponent', () => {
     let component: ViewComponent;

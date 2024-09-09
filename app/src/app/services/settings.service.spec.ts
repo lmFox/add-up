@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SettingsService } from './difficulty.service';
+import { SettingsService } from './settings.service';
 import { Difficulty } from 'domain/difficulty';
 import { Operation } from 'domain/operation';
 import { ISettings } from 'domain/i-settings';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Exercise } from 'domain/exercise';
 import { AdditionGenerator, DivisionGenerator, ExerciseGenerator, MultiplicationGenerator, SubtractionGenerator } from 'domain/generators';
 import { Random } from 'util/random';
-import { SettingsService } from './difficulty.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +17,7 @@ export class ExerciseService {
         new DivisionGenerator()
     ];
 
-    constructor(private readonly difficultyService: SettingsService) {}
+    constructor(private readonly settingsService: SettingsService) {}
 
     generate(): Exercise[] {
         const res = [];
@@ -40,7 +40,7 @@ export class ExerciseService {
 
     private getRandomExercise(): Exercise {
         const generator = Random.choice(this.generators);
-        const difficulty = this.difficultyService.lookup(generator.operation);
+        const difficulty = this.settingsService.lookup(generator.operation);
 
         return generator.random(difficulty);
     }

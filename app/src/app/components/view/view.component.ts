@@ -5,7 +5,7 @@ import { SettingsComponent } from 'components/settings/settings.component';
 import { ExerciseComponent, EShowExercise } from 'components/exercise/exercise.component';
 import { IProgress } from 'domain/i-progress';
 import { Subscription, timer } from 'rxjs';
-import { SettingsService } from 'services/difficulty.service';
+import { SettingsService } from 'services/settings.service';
 
 @Component({
     selector: 'app-view',
