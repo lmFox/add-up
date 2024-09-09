@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExerciseService } from 'services/exercise.service';
 import { Exercise } from 'domain/exercise';
 import { SettingsComponent } from 'components/settings/settings.component';
 import { ExerciseComponent, EShowExercise } from 'components/exercise/exercise.component';
 import { IProgress } from 'domain/i-progress';
 import { Subscription, timer } from 'rxjs';
-
-const TIMER_DURATION_MS = 3000;
+import { SettingsService } from 'services/difficulty.service';
 
 @Component({
     selector: 'app-view',
@@ -15,7 +14,7 @@ const TIMER_DURATION_MS = 3000;
     templateUrl: './view.component.html',
     styleUrl: './view.component.scss'
 })
-export class ViewComponent {
+export class ViewComponent implements OnInit {
     private index: number = 0;
     private exercises: Exercise[] = [];
     private _show = EShowExercise.Exercise;
@@ -41,7 +40,9 @@ export class ViewComponent {
         return this._show;
     }
 
-    constructor(private readonly exerciseService: ExerciseService) {
+    constructor(private readonly exerciseService: ExerciseService, private readonly settingsService: SettingsService) {}
+
+    ngOnInit(): void {
         this.generate();
     }
 
@@ -70,6 +71,8 @@ export class ViewComponent {
 
     private resetTimer() {
         this.timer?.unsubscribe();
-        this.timer = timer(TIMER_DURATION_MS).subscribe(() => this._show = EShowExercise.None);
+        this.timer = timer(this.settingsService.timerDuration).subscribe(() => {
+            this._show = EShowExercise.None;
+        });
     }
 }
