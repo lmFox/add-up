@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Difficulty } from 'domain/difficulty';
 import { Operation, operations } from 'domain/operation';
-import { SettingsService } from 'services/difficulty.service';
+import { SettingsService } from 'services/settings.service';
 
 @Component({
     selector: 'app-settings',
@@ -20,18 +20,18 @@ export class SettingsComponent {
     @Output()
     settingsChange = new EventEmitter<void>();
 
-    constructor(private readonly difficultyService: SettingsService) {
+    constructor(private readonly settingsService: SettingsService) {
         this.combinations = operations.map(op => {
-            return { operation: op, difficulty: this.difficultyService.lookup(op) };
+            return { operation: op, difficulty: this.settingsService.lookup(op) };
         });
-        this.timerDuration = this.difficultyService.timerDuration;
+        this.timerDuration = this.settingsService.timerDuration;
     }
 
     apply() {
         this.combinations.forEach(combi => {
-            this.difficultyService.set(combi.operation, combi.difficulty);
+            this.settingsService.set(combi.operation, combi.difficulty);
         });
-        this.difficultyService.settings = { timerDuration: this.timerDuration };
+        this.settingsService.settings = { timerDuration: this.timerDuration };
 
         this.settingsChange.emit();
     }
