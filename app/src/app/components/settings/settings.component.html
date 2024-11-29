@@ -1,14 +1,16 @@
 <fieldset>
     <legend>🧠 Difficulty</legend>
     
-    <div class="combination-container" *ngFor="let combi of combinations">
-        <label>
-            {{ combi.operation }}:
-        
-            <input type="range" [min]="Difficulty.One" [max]="Difficulty.Max"
-                [(ngModel)]="combi.difficulty" />
-        </label>
-    </div>
+    @for (combi of combinations; track combi) {
+        <div class="combination-container">
+            <label>
+                {{ combi.operation }}:
+            
+                <input type="range" [min]="Difficulty.One" [max]="Difficulty.Max"
+                    [(ngModel)]="combi.difficulty" />
+            </label>
+        </div>
+    }
 
     <div class="combination-container">
         <label>
@@ -18,5 +20,5 @@
         </label>
     </div>
 
-    <button class="applyButton" (click)="apply()">Apply ✅</button>
+    <button class="applyButton" (click)="apply()" [routerLink]="'/'">Apply ✅</button>
 </fieldset>
