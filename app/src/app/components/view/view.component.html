@@ -1,21 +1,16 @@
-<main aria-live="polite"> 
-    @if (!showEndScreen && current) {
-        <div class="settingsButtonBar">
-            <button (click)="showSettings = !showSettings">⚙️</button>
-        </div>
-        @if (showSettings) {
-            <app-settings (settingsChange)="generate()"></app-settings>
-        }
+@if (!showEndScreen && current) {
+    <div class="settingsButtonBar">
+        <button [routerLink]="'settings'">⚙️</button>
+    </div>
 
-        <app-exercise [exercise]="current" [show]="show"></app-exercise>
+    <app-exercise [exercise]="current" [show]="show"></app-exercise>
 
-        <div class="progress-bar">
-            <label for="progress">{{ progress.index }} / {{ progress.max }}</label>
-            <progress id="progress" [value]="progress.index" [max]="progress.max"></progress>
-            <button (click)="next()">Next</button>
-        </div>
-    }
-    @else {
-        <h4>Yay you have finished this exercise!</h4>
-    }
-</main>
+    <div class="progress-bar">
+        <label for="progress">{{ progress.index }} / {{ progress.max }}</label>
+        <progress id="progress" [value]="progress.index" [max]="progress.max"></progress>
+        <button (click)="next()">Next</button>
+    </div>
+}
+@else {
+    <h4>Yay you have finished this exercise!</h4>
+}

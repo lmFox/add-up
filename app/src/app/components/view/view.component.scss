@@ -1,39 +1,33 @@
-main {
-    margin: auto;
-    min-width: min-content;
-    max-width: 40rem;
+.settingsButtonBar {
+    display: flex;
+    justify-content: end;
 
-    .settingsButtonBar {
-        display: flex;
-        justify-content: end;
+    button {
+        font-size: 1.5em;
+        touch-action: manipulation;
+    }
+}
 
-        button {
-            font-size: 1.5em;
-            touch-action: manipulation;
-        }
+.progress-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: center;
+
+    label {
+        flex: 0 0 content;
+        font-size: 1.5em;
+        margin-right: 0.5rem;
     }
 
-    .progress-bar {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: end;
-        align-items: center;
-    
-        label {
-            flex: 0 0 content;
-            font-size: 1.5em;
-            margin-right: 0.5rem;
-        }
-    
-        progress {
-            flex: 1 1;
-        }
-    
-        button {
-            touch-action: manipulation;
-            flex: 0 0 content;
-            font-size: 2em;
-            margin-left: 0.5rem;
-        }
+    progress {
+        flex: 1 1;
+    }
+
+    button {
+        touch-action: manipulation;
+        flex: 0 0 content;
+        font-size: 2em;
+        margin-left: 0.5rem;
     }
 }

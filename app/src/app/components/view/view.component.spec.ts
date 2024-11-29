@@ -3,6 +3,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { ViewComponent } from './view.component';
 import { EShowExercise } from 'components/exercise/exercise.component';
 import { SettingsService } from 'services/settings.service';
+import { provideRouter } from '@angular/router';
 
 describe('ViewComponent', () => {
     let component: ViewComponent;
@@ -12,7 +13,7 @@ describe('ViewComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ViewComponent],
-            providers: [SettingsService]
+            providers: [provideRouter([]), SettingsService]
         })
         .compileComponents();
 
