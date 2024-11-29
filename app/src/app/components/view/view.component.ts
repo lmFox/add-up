@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ExerciseService } from 'services/exercise.service';
 import { Exercise } from 'domain/exercise';
-import { SettingsComponent } from 'components/settings/settings.component';
 import { ExerciseComponent, EShowExercise } from 'components/exercise/exercise.component';
 import { IProgress } from 'domain/i-progress';
 import { Subscription, timer } from 'rxjs';
 import { SettingsService } from 'services/settings.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-view',
     standalone: true,
-    imports: [ExerciseComponent, SettingsComponent],
+    imports: [RouterModule, ExerciseComponent],
     templateUrl: './view.component.html',
     styleUrl: './view.component.scss'
 })
@@ -19,7 +19,6 @@ export class ViewComponent implements OnInit {
     private exercises: Exercise[] = [];
     private _show = EShowExercise.Exercise;
     private timer?: Subscription;
-    showSettings = false;
 
     get current(): Exercise | undefined {
         return this.exercises.at(this.index);
@@ -50,7 +49,6 @@ export class ViewComponent implements OnInit {
         this.index = 0;
         this.exercises = this.exerciseService.generate();
         this._show = EShowExercise.Exercise;
-        this.showSettings = false;
         this.resetTimer();
     }
 
